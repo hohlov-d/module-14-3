@@ -6,7 +6,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 import asyncio
 
-api = ''
+api = '8157842533:AAEq8_kpu1hA-YO2XJdPd0g-NKwNGchaEO8'
 bot = Bot(token=api)
 dp = Dispatcher(bot, storage=MemoryStorage())
 kb = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -44,15 +44,11 @@ async def main_menu(message):
 
 @dp.message_handler(text='Купить')
 async def get_buying_list(message):
-    with open('files/1.jpg', 'rb') as img1:
-        await message.answer_photo(img1, f'Название: БАД1 | Описание: описание1 | Цена: 100')
-    with open('files/2.png', 'rb') as img2:
-        await message.answer_photo(img2, f'Название: БАД2 | Описание: описание2 | Цена: 200')
-    with open('files/3.jpg', 'rb') as img3:
-        await message.answer_photo(img3, f'Название: БАД3 | Описание: описание3 | Цена: 300')
-    with open('files/4.jpg', 'rb') as img4:
-        await message.answer_photo(img4, f'Название: БАД4 | Описание: описание4 | Цена: 400')
+    for i in range(1, 5):
+        with open(f'files/{i}.jpg', 'rb') as img:
+            await message.answer_photo(img, f'Название: БАД{i} | Описание: описание{i} | Цена: {i*100}')
     await message.answer('Выберите продукт для покупки:', reply_markup=kb_2)
+
 
 @dp.callback_query_handler(text='product_buying')
 async def send_confirm_message(call):
